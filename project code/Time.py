@@ -138,14 +138,14 @@ class MainGUI(Frame):
         button.img = img
         button.grid(row = 5, column = 3, sticky = N+E+W+S)
 
-
+        
         img = PhotoImage(file = "images-gif/colon.gif")
         button = Button(self, bg = "white", image = img, borderwidth = 0,\
                 highlightthickness = 0, activebackground = "white",\
                 command = lambda : self.process(":"))
         button.img = img
-        button.grid(row = 6, column = 2, sticky = N+E+W+S)
-        
+        button.grid(row = 5, column = 2, sticky = N+E+W+S)
+              
         
 
         self.pack(fill = BOTH, expand = 1)
