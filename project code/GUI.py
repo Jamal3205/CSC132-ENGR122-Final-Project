@@ -1,4 +1,5 @@
 from tkinter import *
+#import InitialScreen
 
 class MainGUI(Frame):
     def __init__(self, parent):
@@ -13,6 +14,8 @@ class MainGUI(Frame):
         #backspace
         elif(arg == "bak"):
             self.display["text"] = self.display["text"][:-1]
+        elif(arg == "enter"):
+                InitialScreen.Frame()
         elif (arg == "="):
             expr = self.display["text"]
             try:
@@ -130,6 +133,13 @@ class MainGUI(Frame):
                 command = lambda : self.process("."))
         button.img = img
         button.grid(row = 5, column = 1, sticky = N+E+W+S)
+
+        img = PhotoImage(file = "images-gif/enter.gif")
+        button = Button(self, bg = "white", image = img, borderwidth = 0,\
+                highlightthickness = 0, activebackground = "white",\
+                command = lambda : self.process("enter"))
+        button.img = img
+        button.grid(row = 5, column = 2, sticky = N+E+W+S)
 
         self.pack(fill = BOTH, expand = 1)
         
