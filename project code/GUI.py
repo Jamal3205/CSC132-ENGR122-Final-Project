@@ -1,159 +1,188 @@
-from tkinter import *
-#import InitialScreen
+from kivy.app import App
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.image import Image
+from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.image import Image
+from kivy.clock import Clock
 
-class MainGUI(Frame):
-    def __init__(self, parent):
-        Frame.__init__(self, parent, bg = "white")
-        self.setupGUI()
+from datetime import datetime
+# from motor import *
 
-    def process(self, arg):
-        result = ""
-        # if someone types AC then clear the screen
-        if (arg == "AC"):
-            self.display["text"] = ""
-        #backspace
-        elif(arg == "bak"):
-            self.display["text"] = self.display["text"][:-1]
-        elif(arg == "enter"):
-                InitialScreen.Frame()
-        elif (arg == "="):
-            expr = self.display["text"]
-            try:
-                result = str(eval(expr))
-                #rounding to 11 characters then ...
-                if (int(len(str(result))) > 14):
-                    self.display["text"] = result[:11]
-                    self.display["text"] += "..."
-                else:
-                    self.display["text"] = result[:14]
-            except: 
-                self.display["text"] = "ERROR131"
-        else:
-            if (self.display["text"] == "ERROR131"):
-                self.display["text"] = ""
-            self.display["text"] += arg
-    
-    def setupGUI(self):
-        self.display = Label(self, text = "", anchor = E, bg = "white",\
-                height = 1, width = 15, font = ("TexGyreAdventor",45)) 
-        self.display.grid(row = 0, column = 0, columnspan = 4) 
 
-        for row in range (7):
-                Grid.rowconfigure(self, row, weight = 1)
-        for col in range (4):
-            Grid.columnconfigure(self, col, weight = 1)
+folder = "images-gif/"
 
-        img = PhotoImage(file = "images-gif/clr.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("AC"))
-        button.img = img
-        button.grid(row = 3, column = 3, sticky = N+E+W+S)
+# This class uses the BoxLayout to make the orientation 
+# either horizontal or vertical
+class MainScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.layout = BoxLayout(orientation='horizontal')
 
-        img = PhotoImage(file = "images-gif/bak.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("bak"))
-        button.img = img
-        button.grid(row = 2, column = 3, sticky = N+E+W+S)
+        self.button_weight = Button(
+            text="Set Weight",
+            background_color="red"  
+        )
 
-        img = PhotoImage(file = "images-gif/7.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("7"))
-        button.img = img
-        button.grid(row = 2, column = 0, sticky = N+E+W+S)
+        self.button_weight.bind(on_press=self.on_button_weight_click) # type: ignore
+        self.layout.add_widget(self.button_weight)
 
-        img = PhotoImage(file = "images-gif/8.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("8"))
-        button.img = img
-        button.grid(row = 2, column = 1, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/9.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("9"))
-        button.img = img
-        button.grid(row = 2, column = 2, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/4.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("4"))
-        button.img = img
-        button.grid(row = 3, column = 0, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/5.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("5"))
-        button.img = img
-        button.grid(row = 3, column = 1, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/6.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("6"))
-        button.img = img
-        button.grid(row = 3, column = 2, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/1.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("1"))
-        button.img = img
-        button.grid(row = 4, column = 0, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/2.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("2"))
-        button.img = img
-        button.grid(row = 4, column = 1, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/3.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("3"))
-        button.img = img
-        button.grid(row = 4, column = 2, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/0.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("0"))
-        button.img = img
-        button.grid(row = 5, column = 0, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/dot.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("."))
-        button.img = img
-        button.grid(row = 5, column = 1, sticky = N+E+W+S)
-
-        img = PhotoImage(file = "images-gif/enter.gif")
-        button = Button(self, bg = "white", image = img, borderwidth = 0,\
-                highlightthickness = 0, activebackground = "white",\
-                command = lambda : self.process("enter"))
-        button.img = img
-        button.grid(row = 5, column = 2, sticky = N+E+W+S)
-
-        self.pack(fill = BOTH, expand = 1)
+        self.button_time = Button(
+            text="Set Time",
+            background_color="red" 
+        )
         
+        self.button_time.bind(on_press=self.on_button_time_click) # type: ignore
+        self.layout.add_widget(self.button_time)
+
+        self.add_widget(self.layout)
+
+        # set up scheduled interval for checking time
+        Clock.schedule_interval(lambda dt: self.checkTime(SetTime.feedTime), 1)
+
+    #checks the current real world time
+    def checkTime(self, feedTime):
+        currentTime = datetime.now().strftime("%I:%M:%S %p")
+        print(f"{currentTime} current \n{feedTime} feeding time")
+        if (feedTime == currentTime):
+            print("hello world")
+
+    # These on click functions basically calls for the Weight_Time function to switch screens
+    def on_button_weight_click(self, instance):
+        app = App.get_running_app()
+        app.sm.current = "Set Weight"
+
+    def on_button_time_click(self, instance):
+        app = App.get_running_app()
+        app.sm.current = "Set Time"
+
+    
+
+class SetTime(Screen):
+    feedTime = ""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Create the GUI layout using a BoxLayout
+        layout = BoxLayout(orientation="vertical", spacing=5, padding=5)
+        self.display = Label(text="", font_size='30sp', halign="right", valign="bottom", size_hint=(1, 0.5))
+        layout.add_widget(self.display)
+
+        # Add the buttons to the SetTime layout
+        buttons = [
+            "7", "8", "9", "back",
+            "4", "5", "6", " ",
+            "1", "2", "3", "AM",
+            "0", ":", "enter", "PM"
+            ]
+        # Create a GridLayout to hold the buttons
+        buttons_layout = GridLayout(cols=4, spacing=5)
+        
+        for button_text in buttons:
+            button = Button(text=button_text, font_size=30, size_hint=(0.25, 0.2))
+            button.bind(on_press=self.on_button_press)
+            buttons_layout.add_widget(button)
+
+        layout.add_widget(buttons_layout)
+
+        self.add_widget(layout)
+
+    def on_button_press(self, button):
+        if button.text == "clear":
+            self.display.text = ""
+        elif button.text == "back":
+            self.display.text = self.display.text[:-1]
+        elif button.text == "enter":
+            try:
+                self.feedTime = str(self.display.text)
+                print(self.feedTime + "feed in class time")
+                if len(self.feedTime) > 14:
+                    self.display.text = self.feedTime[:11] + "..."
+                else:
+                    self.display.text = self.feedTime
+                # switch back to MainScreen if the result is valid
+                app = App.get_running_app()
+                app.sm.current = "MainScreen"
+            except:
+                self.display.text = "ERROR131"
+        else:
+            if self.display.text == "ERROR131":
+                self.display.text = ""
+            self.display.text += button.text
+
+    def update_feedTime(self):
+        self.feedTime = self.display.text
+
+
+class Set_Weight(Screen):
+    refillWeightLimit = ""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # create the GUI layout
+        layout = BoxLayout(orientation="vertical", spacing=5, padding=5)
+        self.display = Label(text="", font_size='30sp', halign="right", valign="bottom", size_hint=(1, 0.5))
+        layout.add_widget(self.display)
+
+        # add the buttons to the layout
+        buttons = [
+            '7', '8', '9', 'back',
+            '4', '5', '6', 'clear',
+            '1', '2', '3', '',
+            '0', '.', 'enter', '']
+        
+        # Create a GridLayout to hold the buttons
+        buttons_layout = GridLayout(cols=4, spacing=5)
+
+        for button_text in buttons:
+            button = Button(text=button_text, font_size=30, size_hint=(0.25, 0.2))
+            button.bind(on_press=self.button_pressed)
+            buttons_layout.add_widget(button)
+
+        layout.add_widget(buttons_layout)
+
+        self.add_widget(layout)
+
+    def button_pressed(self, button):
+        if button.text == "clear":
+            self.display.text = ""
+        elif button.text == "back":
+            self.display.text = self.display.text[:-1]
+        elif button.text == "enter":
+            try:
+                self.refillWeightLimit = str(self.display.text)
+                if len(self.refillWeightLimit) > 14:
+                    self.display.text = self.refillWeightLimit[:11] + "..."
+                else:
+                    self.display.text = self.refillWeightLimit
+                # switch back to MainScreen if the result is valid
+                app = App.get_running_app()
+                app.sm.current = "MainScreen"
+            except:
+                self.display.text = "ERROR131"
+        else:
+            if self.display.text == "ERROR131":
+                self.display.text = ""
+            self.display.text += button.text
 
 
 
+# This class basically takes the inputs of the buttons
+# And switchs between the screens
+class Weight_Time(App):
+    def build(self):
+        self.sm = ScreenManager()
+        self.main_screen = MainScreen(name="MainScreen")
+        self.set_weight = Set_Weight(name="Set Weight")
+        self.set_time = SetTime(name="Set Time")
+        self.sm.add_widget(self.main_screen)
+        self.sm.add_widget(self.set_weight)
+        self.sm.add_widget(self.set_time)
+        return self.sm
 
 
-
-
-
-
-window = Tk()
-window.title("Set Weight")
-p = MainGUI(window)
-window.mainloop()
-
+if __name__ == "__main__":
+    Weight_Time().run()
