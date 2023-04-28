@@ -113,6 +113,9 @@ class SetTime(Screen):
                 self.display.text = ""
             self.display.text += button.text
 
+    def update_feedTime(self):
+        self.feedTime = self.display.text
+
 
 class Set_Weight(Screen):
     refillWeightLimit = ""
