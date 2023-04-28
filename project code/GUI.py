@@ -75,8 +75,8 @@ class SetTime(Screen):
         buttons = [
             "7", "8", "9", "back",
             "4", "5", "6", " ",
-            "1", "2", "3", "AM",
-            "0", ":", "enter", "PM"
+            "1", "2", "3", " AM",
+            "0", ":", "enter", " PM"
             ]
         # Create a GridLayout to hold the buttons
         buttons_layout = GridLayout(cols=4, spacing=5)
@@ -131,7 +131,7 @@ class Set_Weight(Screen):
         buttons = [
             '7', '8', '9', 'back',
             '4', '5', '6', 'clear',
-            '1', '2', '3', '',
+            '1', '2', '3', 'g',
             '0', '.', 'enter', '']
         
         # Create a GridLayout to hold the buttons
