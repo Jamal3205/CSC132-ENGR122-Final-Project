@@ -24,7 +24,7 @@ class MainScreen(Screen):
 
         self.button_weight = Button(
             text="Set Weight",
-            background_color="red"  
+            background_color="blue"  
         )
 
         self.button_weight.bind(on_press=self.on_button_weight_click) # type: ignore
@@ -32,7 +32,7 @@ class MainScreen(Screen):
 
         self.button_time = Button(
             text="Set Time",
-            background_color="red" 
+            background_color="blue" 
         )
         
         self.button_time.bind(on_press=self.on_button_time_click) # type: ignore
